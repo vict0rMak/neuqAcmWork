@@ -113,50 +113,50 @@ vector<int> div(vector<int>& A, int b)
  
 int main()
 {
-	string s;
-	cin >> s;
+    string s;
+    cin >> s;
     int l=s.size();
     int m=2*l;
-	int a[N],b[N],c[N]={0};
- 
-	for (int i=0;i<l;i++)
-    {
-		a[i]=s[l-i-1]-'0';
-		b[i]=s[l-i-1]-'0';
-	}
-	b[0]+=1;                                	//(n+1)
+    int a[N],b[N],c[N]={0};
 	
-	for (int i=0;i<l;i++)
+    for (int i=0;i<l;i++)
     {
-		for (int j=0;j<l;j++)
-        {
-			c[i+j]+=a[i]*b[j];        			//乘法部分，n*(n+1)
-		}
-	}
-	for (int i=0;i<m;i++)
-    {
-		if (c[i]>=10) 
-        {
-			c[i+1]+=c[i]/10;            		//处理进位
-			c[i]%=10;
-		}
-	}
+	a[i]=s[l-i-1]-'0';
+	b[i]=s[l-i-1]-'0';
+    }
+    b[0]+=1;                                	        //(n+1)
 	
-	while (m>0&&c[m]==0) 
-        m--;									//抹去多余的0
-	vector<int> d;
-	for (int i=0;i<=m;i++)
-		d.push_back(c[i]);
-	vector<int> result = div(d,2);         		//除以2
-	for (int i=result.size()-1;i>=0;i--)
+    for (int i=0;i<l;i++)
+    {
+	for (int j=0;j<l;j++)
+        {
+	    c[i+j]+=a[i]*b[j];        			//乘法部分，n*(n+1)
+	}
+    }
+    for (int i=0;i<m;i++)
+    {
+	if (c[i]>=10) 
+        {
+	    c[i+1]+=c[i]/10;            		//处理进位
+	    c[i]%=10;
+	}
+    }
+	
+    while (m>0&&c[m]==0) 
+        m--;						//抹去多余的0
+    vector<int> d;
+    for (int i=0;i<=m;i++)
+	d.push_back(c[i]);
+    vector<int> result = div(d,2);         		//除以2
+    for (int i=result.size()-1;i>=0;i--)
         cout<<result[i];
-	return 0;
+    return 0;
 }
 ```
 
 本来想定义结构体然后暴力重载，但是写不动了，附一个半成品代码留档
 
-```c++
+```C++
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -164,7 +164,7 @@ struct xlNum
 {
     vector<int> n;
     
-    void operator= (string s)
+    void operator= (string s)                   //重载赋值运算符，一种用字符串赋值，一种是大数赋值
     {
         for(int i=0;i<s.size();i++)
         {
@@ -179,7 +179,7 @@ struct xlNum
             n.push_back(a.n[i]);
         }
     }
-    xlNum operator+ (xlNum l)
+    xlNum operator+ (xlNum l)                   //重载加法运算符
     {
         xlNum c;
         int t=0;
@@ -192,7 +192,7 @@ struct xlNum
         if(t==1) c.n.push_back(t);
         return c;
     }
-    xlNum operator* (int a)
+    xlNum operator* (int a)                     //重载大数乘int乘法运算符
     {
         xlNum p;
         int t=0;
@@ -205,8 +205,8 @@ struct xlNum
         if(t!=0) p.n.push_back(t);
         return p;
     }
-    xlNum operator* (xlNum a)
-    {
+    xlNum operator* (xlNum a)                   //重载大数乘大数乘法运算符（bug出现的地方）
+    {                                           //问就是不会写
         
         string z="0";
         xlNum p;
@@ -228,7 +228,7 @@ struct xlNum
         return p;
     }
     
-    xlNum operator/ (int b)
+    xlNum operator/ (int b)                     //重载除法运算符
     {
 	    xlNum C;
 	    int r = 0;
@@ -242,7 +242,7 @@ struct xlNum
 	    while (C.n.size() > 1 && C.n.back() == 0) C.n.pop_back();
 	    return C;
     }
-    void print()
+    void print()                                //输出函数
     {
         for(int i=n.size()-1;i>=0;i--)
         {
@@ -254,7 +254,7 @@ struct xlNum
 
 int main()
 {
-    string s1,s2;			//纯测试用主函数，与题无关
+    string s1,s2;			                    //纯测试用主函数，与题无关
     cin>>s1>>s2;
     xlNum n1,n2,n3;
     n1=s1;
