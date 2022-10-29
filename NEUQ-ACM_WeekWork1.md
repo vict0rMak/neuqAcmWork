@@ -118,7 +118,7 @@ int main()
     int l=s.size();
     int m=2*l;
 	int a[N],b[N],c[N]={0};
- 
+	
 	for (int i=0;i<l;i++)
     {
 		a[i]=s[l-i-1]-'0';
