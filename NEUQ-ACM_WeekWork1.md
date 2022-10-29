@@ -113,44 +113,44 @@ vector<int> div(vector<int>& A, int b)
  
 int main()
 {
-	string s;
-	cin >> s;
+    string s;
+    cin >> s;
     int l=s.size();
     int m=2*l;
-	int a[N],b[N],c[N]={0};
+    int a[N],b[N],c[N]={0};
 	
-	for (int i=0;i<l;i++)
+    for (int i=0;i<l;i++)
     {
-		a[i]=s[l-i-1]-'0';
-		b[i]=s[l-i-1]-'0';
-	}
-	b[0]+=1;                                	//(n+1)
+	a[i]=s[l-i-1]-'0';
+	b[i]=s[l-i-1]-'0';
+    }
+    b[0]+=1;                                	        //(n+1)
 	
-	for (int i=0;i<l;i++)
+    for (int i=0;i<l;i++)
     {
-		for (int j=0;j<l;j++)
+	for (int j=0;j<l;j++)
         {
-			c[i+j]+=a[i]*b[j];        			//乘法部分，n*(n+1)
-		}
+	    c[i+j]+=a[i]*b[j];        			//乘法部分，n*(n+1)
 	}
-	for (int i=0;i<m;i++)
+    }
+    for (int i=0;i<m;i++)
     {
-		if (c[i]>=10) 
+	if (c[i]>=10) 
         {
-			c[i+1]+=c[i]/10;            		//处理进位
-			c[i]%=10;
-		}
+	    c[i+1]+=c[i]/10;            		//处理进位
+	    c[i]%=10;
 	}
+    }
 	
-	while (m>0&&c[m]==0) 
-        m--;									//抹去多余的0
-	vector<int> d;
-	for (int i=0;i<=m;i++)
-		d.push_back(c[i]);
-	vector<int> result = div(d,2);         		//除以2
-	for (int i=result.size()-1;i>=0;i--)
+    while (m>0&&c[m]==0) 
+        m--;						//抹去多余的0
+    vector<int> d;
+    for (int i=0;i<=m;i++)
+	d.push_back(c[i]);
+    vector<int> result = div(d,2);         		//除以2
+    for (int i=result.size()-1;i>=0;i--)
         cout<<result[i];
-	return 0;
+    return 0;
 }
 ```
 
